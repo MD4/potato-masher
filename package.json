@@ -1,0 +1,32 @@
+{
+  "name": "potato-masher",
+  "version": "0.0.1",
+  "description": "Map & filter json data easily !",
+  "main": "./lib/PotatoMasher",
+  "scripts": {
+    "test": "jshint **/*.js && mocha test/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MD4/potatomasher.git"
+  },
+  "keywords": [
+    "filter",
+    "map",
+    "mapping",
+    "potatomasher",
+    "potato",
+    "data",
+    "json"
+  ],
+  "author": "Martin DEQUATREMARE (https://github.com/MD4)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MD4/potatomasher/issues"
+  },
+  "homepage": "https://github.com/MD4/potatomasher#readme",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
+  }
+}

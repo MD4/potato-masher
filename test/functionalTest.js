@@ -14,7 +14,7 @@ describe('functional compliance', function () {
         ];
         var schema = ['b', 'c'];
         expect(
-            data.map(PotatoMasher.filter(schema))
+            data.map(PotatoMasher.cfilter(schema))
         )
             .to
             .deep
@@ -36,7 +36,7 @@ describe('functional compliance', function () {
         ];
         var schema = {b: 'a', c: 'b'};
         expect(
-            data.map(PotatoMasher.map(schema))
+            data.map(PotatoMasher.cmap(schema))
         )
             .to
             .deep

@@ -12,7 +12,7 @@ For more examples, see unit tests.
 
 ### Filter
 ```javascript
-PotatoMasher = require('potato-masher');
+var PotatoMasher = require('potato-masher');
 
 var data = {a: 1, b: {a: 21, b: 22, c: 23}, c: 3};
 
@@ -25,7 +25,7 @@ console.log(PotatoMasher.filter(data, {b: ['a', 'b'], c: true}));
 
 ### Map
 ```javascript
-PotatoMasher = require('potato-masher');
+var PotatoMasher = require('potato-masher');
 
 var data = {a: 1, b: {a: 2, b: 4, c: 3}};
 
@@ -39,9 +39,9 @@ console.log(PotatoMasher.map(data, {hey: {ho: 'b.a', dude: 'a'}}));
 ### Closure
 
 ```javascript
-PotatoMasher = require('potato-masher');
+var PotatoMasher = require('potato-masher');
 
-var myFilter = PotatoMasher.filter(['a', 'c']);
+var myFilter = PotatoMasher.cfilter(['a', 'c']);
 
 console.log(myFilter({a: 1, b: {a: 21, b: 22, c: 23}, c: 3}));
 // {a: 1, c: 3}
@@ -50,9 +50,9 @@ console.log(myFilter({a: 1, b: {a: 21, b: 22, c: 23}, c: 3}));
 ### Functional way
 
 ```javascript
-PotatoMasher = require('potato-masher');
+var PotatoMasher = require('potato-masher');
 
-var myMap = PotatoMasher.map({b: 'a', c: 'b'});
+var myMap = PotatoMasher.cmap({b: 'a', c: 'b'});
 var data = [
     {a: 1, b: 2, c: 3},
     {a: 2, b: 1, c: 2},

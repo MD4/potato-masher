@@ -62,11 +62,11 @@ describe('map', function () {
 
     it('works with array data 1', function () {
         var data = ['one', 'two', 'three', {hey: 'ho'}];
-        var schema = {a: 1, b: '3.hey'};
+        var schema = {a: 0, b: '3.hey'};
         expect(PotatoMasher.map(data, schema))
             .to
             .deep
-            .equal({a: 'two', b: 'ho'});
+            .equal({a: 'one', b: 'ho'});
     });
 
     it('works with array data 2', function () {
@@ -106,7 +106,7 @@ describe('map', function () {
         expect(PotatoMasher.map(data, schema))
             .to
             .deep
-            .equal({result : 4});
+            .equal({result: 4});
     });
 
     it('handles shitty data 1', function () {
@@ -117,7 +117,7 @@ describe('map', function () {
         expect(PotatoMasher.map(data, schema))
             .to
             .deep
-            .equal({a : undefined});
+            .equal({a: undefined});
     });
 
     it('handles shitty data 2', function () {
@@ -128,7 +128,7 @@ describe('map', function () {
         expect(PotatoMasher.map(data, schema))
             .to
             .deep
-            .equal({a : undefined});
+            .equal({a: undefined});
     });
 
     it('handles shitty data 3', function () {
@@ -158,6 +158,80 @@ describe('map', function () {
             .to
             .deep
             .equal({a: 1, b: 2});
+    });
+
+    it('keeps old data', function () {
+        var data = {a: 1, b: 2, c: 3};
+        var schema = {c: 'a'};
+        expect(PotatoMasher.map(data, schema, {keep: true}))
+            .to
+            .deep
+            .equal({a: 1, b: 2, c: 1});
+    });
+
+    it('keeps old & nested data', function () {
+        var data = {a: 1, b: {a: 21, b: 22, c: [6, 7]}, c: 3};
+        var schema = {a: 'c', c: 'b.c.1', d: 'b'};
+        expect(PotatoMasher.map(data, schema, {keep: true}))
+            .to
+            .deep
+            .equal({a: 3, b: {a: 21, b: 22, c: [6, 7]}, c: 7, d: {a: 21, b: 22, c: [6, 7]}});
+    });
+
+    it('keeps old data in arrays', function () {
+        var data = ['one', 'two', 'three'];
+        var schema = [function () {
+            return this.join(', ');
+        }];
+        expect(PotatoMasher.map(data, schema, {keep: true}))
+            .to
+            .deep
+            .equal(["one", "two", "three", "one, two, three"]);
+    });
+
+    it('keeps old data with werd operations', function () {
+        var data = {a: [1, 3, 4, 5], b: 42};
+        var schema = [{ a:'a.2', b:'a.0'}];
+        expect(PotatoMasher.map(data, schema, {keep: true}))
+            .to
+            .deep
+            .equal([[1, 3, 4, 5], 42, { a: 4, b: 1 }]);
+    });
+
+    it('removes changed fields 1', function () {
+        var data = {a: 1, b: 2, c: 3};
+        var schema = {d: 'a'};
+        expect(PotatoMasher.map(data, schema, {keep: true, removeChanged: true}))
+            .to
+            .deep
+            .equal({d: 1, b: 2, c: 3});
+    });
+
+    it('removes changed fields 2', function () {
+        var data = {a: 1, b: {a: 2, b: 4, c: 3}};
+        var schema = {d: 'a', e: 'b.b'};
+        expect(PotatoMasher.map(data, schema, {keep: true, removeChanged: true}))
+            .to
+            .deep
+            .equal({d: 1, b: {a: 2, c: 3}, e: 4});
+    });
+
+    it('removes changed fields 3', function () {
+        var data = ['one', 'two', 'three'];
+        var schema = {a: 1, b: 2};
+        expect(PotatoMasher.map(data, schema, {keep: true, removeChanged: true}))
+            .to
+            .deep
+            .equal(['one']);
+    });
+
+    it('removes changed fields 4', function () {
+        var data = {a: 1, b: 2, c: [1, 2, 3]};
+        var schema = {a: 'b', d: 'c.2'};
+        expect(PotatoMasher.map(data, schema, {keep: true, removeChanged: true}))
+            .to
+            .deep
+            .equal({a: 2, c: [1, 2], d: 3});
     });
 
 });

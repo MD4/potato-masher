@@ -1,4 +1,4 @@
-# PotatoMasher
+# PotatoMasher [![Build Status](https://travis-ci.org/MD4/potato-masher.svg?branch=master)](https://travis-ci.org/MD4/potato-masher)
 ### Map & filter json data easily !
 
 ## Installation

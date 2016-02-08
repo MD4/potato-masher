@@ -142,6 +142,17 @@ describe('map', function () {
             .equal(data);
     });
 
+    it('handles shitty data 4', function () {
+        var data = {a: 1, b: null};
+        var schema = {
+            a: 'b'
+        };
+        expect(PotatoMasher.map(data, schema, {keep: true, removeChanged: true}))
+            .to
+            .deep
+            .equal({a: null});
+    });
+
     it('handles shitty schema 1', function () {
         var data = {a: 1, b: 2};
         var schema = 123;
@@ -191,11 +202,11 @@ describe('map', function () {
 
     it('keeps old data with werd operations', function () {
         var data = {a: [1, 3, 4, 5], b: 42};
-        var schema = [{ a:'a.2', b:'a.0'}];
+        var schema = [{a: 'a.2', b: 'a.0'}];
         expect(PotatoMasher.map(data, schema, {keep: true}))
             .to
             .deep
-            .equal([[1, 3, 4, 5], 42, { a: 4, b: 1 }]);
+            .equal([[1, 3, 4, 5], 42, {a: 4, b: 1}]);
     });
 
     it('removes changed fields 1', function () {
